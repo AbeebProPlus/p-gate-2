@@ -45,7 +45,7 @@ function handleCustomerIdentificationFailed(data) {
 }
 
 function handleCustomerIdentificationSuccess(data) {
-    console.log(data)
+    console.log("Identification sucess", data)
     console.log('Customer identification successful for:', data.customer_code);
 }
 
@@ -55,6 +55,6 @@ function handleDedicatedAccountAssignFailed(data) {
 }
 
 function handleDedicatedAccountAssignSuccess(data) {
-    console.log(data)
+    console.log("Assignment success",data)
     console.log('Dedicated account assignment successful');
 }
