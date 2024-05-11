@@ -8,13 +8,18 @@ exports.handleWebhookEvent = (req, res) => {
             return res.status(400).json({ error: 'Invalid signature' });
         }
         const event = req.body;
-        console.log('Received Paystack webhook event:', event.event);
         switch (event.event) {
             case 'customeridentification.failed':
                 handleCustomerIdentificationFailed(event.data);
                 break;
             case 'customeridentification.success':
                 handleCustomerIdentificationSuccess(event.data);
+                break;
+            case 'dedicatedaccount.assign.failed':
+                handleDedicatedAccountAssignFailed(event.data);
+                break;
+            case 'dedicatedaccount.assign.success':
+                handleDedicatedAccountAssignSuccess(event.data);
                 break;
             default:
                 console.log('Unhandled Paystack webhook event:', event.event);
@@ -42,4 +47,14 @@ function handleCustomerIdentificationFailed(data) {
 function handleCustomerIdentificationSuccess(data) {
     console.log(data)
     console.log('Customer identification successful for:', data.customer_code);
+}
+
+function handleDedicatedAccountAssignFailed(data) {
+    console.log(data)
+    console.log('Dedicated account assignment failed for:', data.customer_code);
+}
+
+function handleDedicatedAccountAssignSuccess(data) {
+    console.log(data)
+    console.log('Dedicated account assignment successful for:', data.customer_code);
 }
