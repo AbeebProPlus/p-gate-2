@@ -51,10 +51,10 @@ function handleCustomerIdentificationSuccess(data) {
 
 function handleDedicatedAccountAssignFailed(data) {
     console.log(data)
-    console.log('Dedicated account assignment failed for:', data.customer_code);
+    console.log('Dedicated account assignment failed!');
 }
 
 function handleDedicatedAccountAssignSuccess(data) {
     console.log(data)
-    console.log('Dedicated account assignment successful for:', data.customer_code);
+    console.log('Dedicated account assignment successful');
 }
