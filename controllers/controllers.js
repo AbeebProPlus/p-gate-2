@@ -89,6 +89,57 @@ const payStack = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
+  },
+  createVirtualAccount: async (req, res) => {
+    try {
+      const { email, firstName, middleName, lastName, phone, preferredBank, country, accountNumber, bvn, bankCode } = req.body;
+      const requestData = JSON.stringify({
+        email,
+        first_name: firstName,
+        middle_name: middleName,
+        last_name: lastName,
+        phone,
+        preferred_bank: preferredBank,
+        country,
+        account_number: accountNumber,
+        bvn,
+        bank_code: bankCode
+      });
+      const options = {
+        hostname: "api.paystack.co",
+        port: 443,
+        path: "/dedicated_account/assign",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+          "Content-Type": "application/json",
+        },
+      };
+      const paystackReq = https.request(options, (paystackRes) => {
+        let data = "";
+        paystackRes.on("data", (chunk) => {
+          data += chunk;
+        });
+  
+        paystackRes.on("end", () => {
+          try {
+            const responseData = JSON.parse(data);
+            res.status(paystackRes.statusCode).json(responseData);
+          } catch (error) {
+            res.status(500).json({ error: error.message });
+          }
+        });
+      });
+  
+      paystackReq.on("error", (error) => {
+        console.error("Paystack API request error:", error);
+        res.status(500).json({ error: error.message });
+      });
+      paystackReq.write(requestData);
+      paystackReq.end();
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 };
 
