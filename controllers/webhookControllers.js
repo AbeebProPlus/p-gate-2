@@ -35,9 +35,11 @@ function validateSignature(req) {
 }
 
 function handleCustomerIdentificationFailed(data) {
+    console.log(data)
     console.log('Customer identification failed for:', data.customer_code);
 }
 
 function handleCustomerIdentificationSuccess(data) {
+    console.log(data)
     console.log('Customer identification successful for:', data.customer_code);
 }
