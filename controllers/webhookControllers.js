@@ -70,8 +70,8 @@ function handleDedicatedAccountAssignSuccess(data) {
         "accountNumber": data.dedicated_account.account_number,
         "active": data.dedicated_account.active,
         "createdAt": data.dedicated_account.created_at,
-        "accountType": data.assignment.account_type,
-        "assignedAt": data.assignment.assigned_at
+        "accountType": data.dedicated_account.assignment.account_type,
+        "assignedAt": data.dedicated_account.assignment.assigned_at
     })
 }
 
