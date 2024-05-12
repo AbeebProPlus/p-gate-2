@@ -140,6 +140,86 @@ const payStack = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
+  },
+  getCustomerByEmailOrCode: async (req, res) => {
+    try {
+      const { email_or_code } = req.params;
+
+      const options = {
+        hostname: "api.paystack.co",
+        port: 443,
+        path: `/customer/${email_or_code}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+        },
+      };
+
+      const paystackReq = https.request(options, (paystackRes) => {
+        let data = "";
+
+        paystackRes.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        paystackRes.on("end", () => {
+          try {
+            const responseData = JSON.parse(data);
+            res.status(paystackRes.statusCode).json(responseData);
+          } catch (error) {
+            res.status(500).json({ error: error.message });
+          }
+        });
+      });
+
+      paystackReq.on("error", (error) => {
+        console.error("Paystack API request error:", error);
+        res.status(500).json({ error: error.message });
+      });
+
+      paystackReq.end();
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  getAvailableProviders: async (req, res) => {
+    try {
+      const options = {
+        hostname: "api.paystack.co",
+        port: 443,
+        path: "/dedicated_account/available_providers",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+        },
+      };
+
+      const paystackReq = https.request(options, (paystackRes) => {
+        let data = "";
+
+        paystackRes.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        paystackRes.on("end", () => {
+          try {
+            const responseData = JSON.parse(data);
+            res.status(paystackRes.statusCode).json(responseData);
+          } catch (error) {
+            res.status(500).json({ error: error.message });
+          }
+        });
+      });
+
+      paystackReq.on("error", (error) => {
+        console.error("Paystack API request error:", error);
+        res.status(500).json({ error: error.message });
+      });
+
+      paystackReq.end();
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 };
 

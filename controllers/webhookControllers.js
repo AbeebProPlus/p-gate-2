@@ -9,6 +9,9 @@ exports.handleWebhookEvent = (req, res) => {
         }
         const event = req.body;
         switch (event.event) {
+            case 'charge.success':
+                handleChargeSuccess(event.data);
+                break;
             case 'customeridentification.failed':
                 handleCustomerIdentificationFailed(event.data);
                 break;
@@ -57,4 +60,9 @@ function handleDedicatedAccountAssignFailed(data) {
 function handleDedicatedAccountAssignSuccess(data) {
     console.log("Assignment success",data)
     console.log('Dedicated account assignment successful');
+}
+
+function handleChargeSuccess(data) {
+    console.log(data)
+    console.log('Charge successful for:', data.reference);
 }

@@ -8,5 +8,7 @@ router.post(
   paymentController.validateCustomer
 );
 router.post("/dedicated-account/assign", paymentController.createVirtualAccount);
+router.get("/dedicated-account/:email_or_code", paymentController.getCustomerByEmailOrCode);
+router.get("/available-providers", paymentController.getAvailableProviders);
 
 module.exports = router;
