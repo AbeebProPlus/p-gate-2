@@ -1,5 +1,6 @@
 require("dotenv").config();
 const crypto = require('crypto');
+const mailService = require("../services/mailService");
 
 exports.handleWebhookEvent = (req, res) => {
     try {
@@ -57,7 +58,7 @@ function handleDedicatedAccountAssignFailed(data) {
     console.log('Dedicated account assignment failed!');
 }
 
-function handleDedicatedAccountAssignSuccess(data) {
+async function handleDedicatedAccountAssignSuccess(data) {
     console.log("Assignment success",data)
     console.log("Extracted details")
     console.log({
@@ -73,6 +74,19 @@ function handleDedicatedAccountAssignSuccess(data) {
         "accountType": data.dedicated_account.assignment.account_type,
         "assignedAt": data.dedicated_account.assignment.assigned_at
     })
+    try {
+        await mailService.sendMail(data.customer.email, 'Dedicated Account Creation',
+            'Dear ' + data.customer.first_name + '\nYour dedicated account has been created successfully. Here are the details:\n' +
+            'Account Name: ' + data.dedicated_account.account_name + '\n' +
+            'Account Number: ' + data.dedicated_account.account_number + '\n' +
+            'Bank: ' + data.dedicated_account.bank.name + '\n' +
+            'Account Type: ' + data.dedicated_account.assignment.account_type + '\n' +
+            'Please make your payments to us using this account. Thank you!'
+        );
+        console.log('Email sent successfully to:', data.customer.email);
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
 }
 
 function handleChargeSuccess(data) {
