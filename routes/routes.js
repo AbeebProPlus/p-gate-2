@@ -10,5 +10,6 @@ router.post(
 router.post("/dedicated-account/assign", paymentController.createVirtualAccount);
 router.get("/dedicated-account/:email_or_code", paymentController.getCustomerByEmailOrCode);
 router.get("/available-providers", paymentController.getAvailableProviders);
+router.get("/banks", paymentController.getBanks);
 
 module.exports = router;
