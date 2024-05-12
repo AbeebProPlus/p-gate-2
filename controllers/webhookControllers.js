@@ -59,7 +59,20 @@ function handleDedicatedAccountAssignFailed(data) {
 
 function handleDedicatedAccountAssignSuccess(data) {
     console.log("Assignment success",data)
-    console.log('Dedicated account assignment successful');
+    console.log("Extracted details")
+    console.log({
+        "name": data.customer.first_name + " " + data.customer.last_name,
+        "email": data.customer.email,
+        "phone": data.customer.phone,
+        "customercode": data.customer.customer_code,
+        "bank": data.dedicated_account.bank.name,
+        "accountName": data.dedicated_account.account_name,
+        "accountNumber": data.dedicated_account.account_number,
+        "active": data.dedicated_account.active,
+        "createdAt": data.dedicated_account.created_at,
+        "accountType": data.assignment.account_type,
+        "assignedAt": data.assignment.assigned_at
+    })
 }
 
 function handleChargeSuccess(data) {
