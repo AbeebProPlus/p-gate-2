@@ -94,15 +94,15 @@ const payStack = {
     try {
       const { email, firstName, middleName, lastName, phone, preferredBank, country, accountNumber, bvn, bankCode } = req.body;
       const requestData = JSON.stringify({
-        email,
+        email: email,
         first_name: firstName,
         middle_name: middleName,
         last_name: lastName,
-        phone,
+        phone: phone,
         preferred_bank: preferredBank,
-        country,
+        country: country,
         account_number: accountNumber,
-        bvn,
+        bvn:bvn,
         bank_code: bankCode
       });
       const options = {

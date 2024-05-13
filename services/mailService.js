@@ -9,7 +9,6 @@ const sendMail = async (to, subject, text) => {
           subject: subject,
           text: text
         });
-        console.log('Message sent: %s', info.messageId);
       } catch (error) {
         console.error('Error occurred while sending email:', error);
       }
